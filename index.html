@@ -772,6 +772,49 @@ function closeMobileNav(){
   document.body.style.overflow = '';
 }
 
+
+
+(function(){
+  var nav = document.getElementById('nav');
+  function onScroll(){
+    if(window.scrollY > 10){ nav.classList.add('scrolled'); }
+    else{ nav.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal:not(.on)').forEach(function(el){ io.observe(el); });
+  var CIRC = 289, TARGET = 68;
+  var ring = document.getElementById('ring');
+  var ringNum = document.getElementById('ringNum');
+  var started = false;
+  function animateRing(){
+    if(started){ return; }
+    started = true;
+    ring.style.strokeDashoffset = String(CIRC * (1 - TARGET / 100));
+    var t0 = null;
+    function step(ts){
+      if(t0 === null){ t0 = ts; }
+      var p = Math.min((ts - t0) / 1600, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      ringNum.textContent = Math.round(TARGET * eased) + '%';
+      if(p < 1){ requestAnimationFrame(step); }
+    }
+    requestAnimationFrame(step);
+  }
+  var heroVisual = document.querySelector('.hero-visual');
+  var io2 = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ animateRing(); io2.disconnect(); }
+    });
+  }, {threshold:.3});
+  io2.observe(heroVisual);
+})();
+</script>
 <script>
 // ===== i18n system (16 languages) =====
 try{
@@ -841,48 +884,6 @@ document.addEventListener('click', function(e){
 buildLangDropdowns();
 applyLang();
 }catch(e){ console.warn('i18n init failed:', e); }
-</script>
-
-(function(){
-  var nav = document.getElementById('nav');
-  function onScroll(){
-    if(window.scrollY > 10){ nav.classList.add('scrolled'); }
-    else{ nav.classList.remove('scrolled'); }
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
-    });
-  }, {threshold:.15});
-  document.querySelectorAll('.reveal:not(.on)').forEach(function(el){ io.observe(el); });
-  var CIRC = 289, TARGET = 68;
-  var ring = document.getElementById('ring');
-  var ringNum = document.getElementById('ringNum');
-  var started = false;
-  function animateRing(){
-    if(started){ return; }
-    started = true;
-    ring.style.strokeDashoffset = String(CIRC * (1 - TARGET / 100));
-    var t0 = null;
-    function step(ts){
-      if(t0 === null){ t0 = ts; }
-      var p = Math.min((ts - t0) / 1600, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      ringNum.textContent = Math.round(TARGET * eased) + '%';
-      if(p < 1){ requestAnimationFrame(step); }
-    }
-    requestAnimationFrame(step);
-  }
-  var heroVisual = document.querySelector('.hero-visual');
-  var io2 = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ animateRing(); io2.disconnect(); }
-    });
-  }, {threshold:.3});
-  io2.observe(heroVisual);
-})();
 </script>
 </body>
 </html>
