@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Drive Cleaner neo — 让 C 盘重回最佳状态</title>
+<meta name="description" content="轻量、完全离线的开源 C 盘清理工具。单文件便携版 8.8 MB，内置 16 国语言，原生高速引擎。">
+<style>
+:root{
+  --bg:#f7fbf9;
+  --ink:#122521;
+  --ink-2:#51665f;
+  --ink-3:#8aa09a;
+  --teal:#0c8a7b;
+  --teal-deep:#0a6e63;
+  --teal-soft:#e2f4f0;
+  --card:#ffffff;
+  --line:#e2ede9;
+  --radius:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+/* ===== nav ===== */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  transition:background .35s,box-shadow .35s,backdrop-filter .35s;
+}
+#nav.scrolled{
+  background:rgba(247,251,249,.82);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--line);
+}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:.2px}
+.brand .logo{
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(135deg,#12a594,#0c8a7b);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(12,138,123,.28);
+  flex:none;
+}
+.brand small{font-weight:500;color:var(--ink-3);font-size:12px;margin-left:2px}
+.nav-links{display:flex;align-items:center;gap:30px;font-size:14px;color:var(--ink-2)}
+.nav-links a.link{transition:color .2s}
+.nav-links a.link:hover{color:var(--teal)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:none;cursor:pointer;font-family:inherit;
+  border-radius:999px;font-weight:600;
+  transition:transform .2s,box-shadow .2s,background .2s;
+}
+.btn-primary{
+  background:var(--teal);color:#fff;
+  padding:11px 24px;font-size:14px;
+  box-shadow:0 8px 20px rgba(12,138,123,.30);
+}
+.btn-primary:hover{background:var(--teal-deep);transform:translateY(-2px);box-shadow:0 12px 26px rgba(12,138,123,.36)}
+.btn-ghost{
+  background:transparent;color:var(--ink-2);
+  padding:11px 22px;font-size:14px;
+  border:1px solid var(--line);
+}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px)}
+
+/* ===== hero ===== */
+.hero{padding:168px 0 96px;position:relative}
+.hero::before{
+  content:"";position:absolute;top:-120px;right:-180px;width:640px;height:640px;
+  background:radial-gradient(circle,rgba(18,165,148,.14) 0%,rgba(18,165,148,0) 62%);
+  pointer-events:none;
+}
+.hero::after{
+  content:"";position:absolute;top:220px;left:-240px;width:520px;height:520px;
+  background:radial-gradient(circle,rgba(12,138,123,.10) 0%,rgba(12,138,123,0) 60%);
+  pointer-events:none;
+}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;position:relative}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--teal-soft);color:var(--teal-deep);
+  font-size:13px;font-weight:600;
+  padding:7px 16px;border-radius:999px;margin-bottom:26px;
+}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{
+  font-size:clamp(38px,5.4vw,62px);
+  line-height:1.14;font-weight:800;letter-spacing:-.5px;
+  margin-bottom:22px;
+}
+h1 em{font-style:normal;color:var(--teal)}
+.hero-sub{font-size:17px;line-height:1.85;color:var(--ink-2);max-width:520px;margin-bottom:38px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
+.hero-cta .btn-primary{padding:15px 32px;font-size:15px}
+.hero-cta .btn-ghost{padding:15px 28px;font-size:15px}
+.stats{display:flex;gap:0;border-top:1px solid var(--line);padding-top:26px}
+.stat{flex:1;padding-right:20px}
+.stat + .stat{border-left:1px solid var(--line);padding-left:24px}
+.stat b{display:block;font-size:24px;font-weight:800;letter-spacing:-.3px}
+.stat b i{font-style:normal;font-size:14px;font-weight:600;color:var(--ink-3);margin-left:2px}
+.stat span{font-size:13px;color:var(--ink-3)}
+
+/* hero visual */
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-height:400px}
+.ring-card{
+  width:300px;height:300px;border-radius:32px;
+  background:linear-gradient(150deg,#0fa392,#0a6e63);
+  box-shadow:0 30px 70px rgba(10,110,99,.35);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  color:#fff;position:relative;
+}
+.ring-card::before{
+  content:"";position:absolute;inset:0;border-radius:32px;
+  background:radial-gradient(circle at 24% 18%,rgba(255,255,255,.22),transparent 52%);
+}
+.ring-card svg{position:relative}
+.ring-bg{stroke:rgba(255,255,255,.25)}
+.ring-fg{stroke:#fff;stroke-linecap:round;stroke-dasharray:289;stroke-dashoffset:289;transition:stroke-dashoffset 1.6s cubic-bezier(.22,.8,.3,1)}
+.ring-num{font-size:34px;font-weight:800;letter-spacing:-.5px}
+.ring-label{font-size:12px;opacity:.85}
+.float-chip{
+  position:absolute;background:var(--card);border-radius:16px;
+  box-shadow:0 16px 40px rgba(18,37,33,.12);
+  padding:14px 18px;display:flex;align-items:center;gap:12px;
+  animation:floaty 5.5s ease-in-out infinite;
+}
+.float-chip .ic{
+  width:38px;height:38px;border-radius:12px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+}
+.float-chip b{display:block;font-size:14px;font-weight:700}
+.float-chip span{font-size:12px;color:var(--ink-3)}
+.chip-1{top:26px;left:-34px}
+.chip-1 .ic{background:var(--teal-soft);color:var(--teal)}
+.chip-2{bottom:34px;right:-40px;animation-delay:-2.6s}
+.chip-2 .ic{background:#fdf1e3;color:#d97706}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* ===== sections ===== */
+section{padding:92px 0}
+.sec-head{max-width:560px;margin-bottom:56px}
+.sec-tag{
+  display:inline-block;font-size:13px;font-weight:700;color:var(--teal);
+  letter-spacing:2px;margin-bottom:14px;
+}
+h2{font-size:clamp(28px,3.4vw,40px);font-weight:800;letter-spacing:-.4px;line-height:1.25;margin-bottom:14px}
+.sec-sub{color:var(--ink-2);font-size:15px;line-height:1.8}
+
+/* features */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.feat{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:34px 32px;position:relative;overflow:hidden;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+}
+.feat:hover{transform:translateY(-6px);box-shadow:0 22px 48px rgba(18,37,33,.09);border-color:transparent}
+.feat .ic{
+  width:50px;height:50px;border-radius:15px;margin-bottom:22px;
+  display:flex;align-items:center;justify-content:center;
+}
+.feat h3{font-size:19px;font-weight:700;margin-bottom:10px}
+.feat p{font-size:14px;line-height:1.8;color:var(--ink-2)}
+.feat .tag{
+  position:absolute;top:30px;right:28px;
+  font-size:12px;font-weight:600;color:var(--ink-3);
+  background:var(--bg);border-radius:999px;padding:5px 12px;
+}
+.ic-a{background:var(--teal-soft);color:var(--teal)}
+.ic-b{background:#efeafe;color:#7c5cd6}
+.ic-c{background:#fdf1e3;color:#d97706}
+.ic-d{background:#e8f1fd;color:#2f7cd0}
+
+/* trust */
+#trust{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:44px}
+.trust-item .n{
+  font-size:13px;font-weight:800;color:var(--teal);
+  font-variant-numeric:tabular-nums;margin-bottom:16px;letter-spacing:1px;
+}
+.trust-item h3{font-size:17px;font-weight:700;margin-bottom:10px}
+.trust-item p{font-size:14px;line-height:1.85;color:var(--ink-2)}
+.trust-item code{
+  font-family:ui-monospace,Consolas,monospace;font-size:12px;
+  background:var(--bg);border:1px solid var(--line);border-radius:6px;
+  padding:2px 7px;color:var(--teal-deep);
+}
+
+/* tech */
+.tech-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+.tech-list{display:flex;flex-direction:column;gap:0}
+.tech-row{
+  display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--line);
+  align-items:flex-start;
+}
+.tech-row:first-child{border-top:1px solid var(--line)}
+.tech-row .k{flex:none;width:112px;font-size:14px;font-weight:700;color:var(--ink);padding-top:2px}
+.tech-row .v{font-size:14px;line-height:1.8;color:var(--ink-2)}
+.tech-row .v b{color:var(--ink)}
+
+/* download */
+.dl-card{
+  border-radius:28px;padding:72px 56px;text-align:center;
+  background:linear-gradient(140deg,#0fa392 0%,#0a6e63 100%);
+  color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 32px 80px rgba(10,110,99,.32);
+}
+.dl-card::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 10%,rgba(255,255,255,.18),transparent 46%),
+             radial-gradient(circle at 12% 92%,rgba(255,255,255,.12),transparent 42%);
+}
+.dl-card > *{position:relative}
+.dl-card h2{margin-bottom:14px}
+.dl-card p{opacity:.9;font-size:15px;line-height:1.8;max-width:480px;margin:0 auto 36px}
+.dl-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
+.btn-white{
+  background:#fff;color:var(--teal-deep);
+  padding:15px 34px;font-size:15px;
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
+}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(0,0,0,.24)}
+.btn-line{
+  background:transparent;color:#fff;
+  padding:15px 30px;font-size:15px;
+  border:1px solid rgba(255,255,255,.45);
+}
+.btn-line:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.dl-meta{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-size:13px;opacity:.85}
+.dl-meta span{display:inline-flex;align-items:center;gap:7px}
+
+/* footer */
+footer{padding:44px 0;border-top:1px solid var(--line)}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--ink-3)}
+.foot a{transition:color .2s}
+.foot a:hover{color:var(--teal)}
+.foot .links{display:flex;gap:24px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,.8,.3,1),transform .8s cubic-bezier(.22,.8,.3,1)}
+.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* responsive */
+@media (max-width:920px){
+  .hero{padding:130px 0 70px}
+  .hero-grid{grid-template-columns:1fr;gap:64px}
+  .hero-visual{min-height:auto}
+  .chip-1{left:0}
+  .chip-2{right:0}
+  .feat-grid{grid-template-columns:1fr}
+  .trust-grid{grid-template-columns:1fr;gap:36px}
+  .tech-grid{grid-template-columns:1fr;gap:40px}
+  .stats{flex-wrap:wrap;gap:18px 0}
+  .stat{flex:1 1 40%}
+  .nav-links a.link{display:none}
+  .dl-card{padding:56px 28px}
+}
+</style>
+</head>
+<body>
+
+<header id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <span class="logo">
+        <svg viewBox="0 0 24 24" width="17" height="17"><path fill="#fff" d="M12 2l2.2 5.9L20 10l-5.8 2.1L12 18l-2.2-5.9L4 10l5.8-2.1L12 2zm7 12l1.1 2.9L23 18l-2.9 1.1L19 22l-1.1-2.9L15 18l2.9-1.1L19 14z"/></svg>
+      </span>
+      C Drive Cleaner <small>neo</small>
+    </a>
+    <nav class="nav-links">
+      <a class="link" href="#features">功能</a>
+      <a class="link" href="#trust">安全可靠</a>
+      <a class="link" href="#tech">技术架构</a>
+      <a class="btn btn-primary" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo/releases/download/neo-1.0/C-Drive-Cleaner-neo-1.0-Win64.exe" data-primary-action>
+        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 3v10.6l3.3-3.3 1.4 1.4L11 17.4 5.3 11.7l1.4-1.4L10 13.6V3h2zM5 19h14v2H5z"/></svg>
+        下载
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- hero -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="badge reveal on"><span class="dot"></span>neo 1.0 现已发布 · MIT 开源</div>
+        <h1 class="reveal on d1">让 C 盘空间<br>回到<em>最佳状态</em></h1>
+        <p class="hero-sub reveal on d2">轻量、完全离线的开源 C 盘清理工具。单文件便携版仅 8.8 MB，原生高速引擎，内置 16 国语言——下载即用，无需安装。</p>
+        <div class="hero-cta reveal on d3">
+          <a class="btn btn-primary" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo/releases/download/neo-1.0/C-Drive-Cleaner-neo-1.0-Win64.exe" data-primary-action>
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 3v10.6l3.3-3.3 1.4 1.4L11 17.4 5.3 11.7l1.4-1.4L10 13.6V3h2zM5 19h14v2H5z"/></svg>
+            免费下载 Windows 版
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+            GitHub 仓库
+          </a>
+        </div>
+        <div class="stats reveal on d4">
+          <div class="stat"><b>8.8<i>MB</i></b><span>单文件便携版</span></div>
+          <div class="stat"><b>16<i>种</i></b><span>内置界面语言</span></div>
+          <div class="stat"><b>0<i>联网</i></b><span>完全离线运行</span></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal on d2">
+        <div class="ring-card">
+          <svg viewBox="0 0 120 120" width="190" height="190">
+            <circle class="ring-bg" cx="60" cy="60" r="46" fill="none" stroke-width="8"/>
+            <circle class="ring-fg" id="ring" cx="60" cy="60" r="46" fill="none" stroke-width="8" transform="rotate(-90 60 60)"/>
+            <text x="60" y="58" text-anchor="middle" fill="#fff" class="ring-num" id="ringNum">0%</text>
+            <text x="60" y="76" text-anchor="middle" fill="rgba(255,255,255,.85)" font-size="9">C 盘剩余（示意）</text>
+          </svg>
+        </div>
+        <div class="float-chip chip-1">
+          <span class="ic">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M13 2L4.5 13.5H11L9.5 22 19 9.5h-6.5L13 2z"/></svg>
+          </span>
+          <div><b>一键快速清理</b><span>自动处理 9 类常见垃圾</span></div>
+        </div>
+        <div class="float-chip chip-2">
+          <span class="ic">
+            <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path stroke="currentColor" stroke-width="1.8" d="M15.3 15.3L20.5 20.5"/></svg>
+          </span>
+          <div><b>原生高速引擎</b><span>多线程并发扫描大文件</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- features -->
+  <section id="features">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-tag">FEATURES</span>
+        <h2>四大能力，一次到位</h2>
+        <p class="sec-sub">基于旧版打造的全新 neo 架构，把清理、查找、查看都做到极致轻量。</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat reveal">
+          <span class="tag">自动化</span>
+          <div class="ic ic-a">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M13 2L4.5 13.5H11L9.5 22 19 9.5h-6.5L13 2z"/></svg>
+          </div>
+          <h3>一键快速清理</h3>
+          <p>按固定顺序自动执行 9 类常见垃圾清理，全程无需干预，实时查看执行输出，点一下就开始。</p>
+        </div>
+        <div class="feat reveal d1">
+          <span class="tag">可控</span>
+          <div class="ic ic-b">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="7" cy="17" r="2" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <h3>高级自定义模式</h3>
+          <p>逐项选择 11 个清理项，想清什么自己定。危险操作独立分区并红色警示，谨慎与否由你掌控。</p>
+        </div>
+        <div class="feat reveal d2">
+          <span class="tag">高速</span>
+          <div class="ic ic-c">
+            <svg viewBox="0 0 24 24" width="22" height="22"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path stroke="currentColor" stroke-width="1.8" d="M15.3 15.3L20.5 20.5"/></svg>
+          </div>
+          <h3>大文件查找</h3>
+          <p>neo 原生高速引擎，Go 并发遍历加 top-20 最小堆，带实时进度条，快速定位吃掉空间的大块头。</p>
+        </div>
+        <div class="feat reveal d3">
+          <span class="tag">直观</span>
+          <div class="ic ic-d">
+            <svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 12V6.5M12 12l4 3"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <h3>磁盘空间查看</h3>
+          <p>输入盘符即可查看总容量、已用与剩余空间，用量条直观呈现，C 盘状态一目了然。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- trust -->
+  <section id="trust">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-tag">TRUST</span>
+        <h2>干净、透明、可验证</h2>
+        <p class="sec-sub">清理工具的底线是不添乱。neo 的每一步都经得起检查。</p>
+      </div>
+      <div class="trust-grid">
+        <div class="trust-item reveal">
+          <div class="n">01</div>
+          <h3>命令逐字取自原版脚本</h3>
+          <p>运行时解析内置的原版 <code>C Drive Cleaner v2.9.bat</code>，清理命令零改动执行，并通过 SHA-256 校验完整性。</p>
+        </div>
+        <div class="trust-item reveal d1">
+          <div class="n">02</div>
+          <h3>完全离线，轻量无捆绑</h3>
+          <p>使用 Windows 原生 WebView2 渲染，不捆绑 Chromium；单文件 8.8 MB，无需安装，不联网也能完整工作。</p>
+        </div>
+        <div class="trust-item reveal d2">
+          <div class="n">03</div>
+          <h3>危险操作，醒目警示</h3>
+          <p>可能影响系统恢复的项目被放入独立危险操作区并红色标注；全局日志可选开启，清理过程有据可查。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- tech -->
+  <section id="tech">
+    <div class="wrap tech-grid">
+      <div class="reveal">
+        <span class="sec-tag">UNDER THE HOOD</span>
+        <h2>为 Windows 而生的<br>原生体验</h2>
+        <p class="sec-sub">Go 后端加原生前端渲染，把体积和性能都压到极限。开源在 GitHub，欢迎检视每一行代码。</p>
+      </div>
+      <div class="tech-list reveal d1">
+        <div class="tech-row"><span class="k">后端</span><span class="v"><b>Go 1.22 + Wails v2</b>，调用 Windows 系统原生 WebView2 渲染界面，不捆绑 Chromium，体积更小、启动更快。</span></div>
+        <div class="tech-row"><span class="k">清理引擎</span><span class="v">运行时解析内置原版 <b>v2.9 bat 脚本</b>，命令逐字执行、SHA-256 校验，行为与原版完全一致。</span></div>
+        <div class="tech-row"><span class="k">扫描引擎</span><span class="v">neo 原生高速引擎：<b>Go 并发遍历 + top-20 最小堆</b>，替代旧版 PowerShell 方案，带实时进度条。</span></div>
+        <div class="tech-row"><span class="k">多语言</span><span class="v"><b>16 种语言</b>，默认跟随系统语言，支持手动切换并持久化保存。</span></div>
+        <div class="tech-row"><span class="k">开源协议</span><span class="v"><b>MIT License</b>，源代码完整公开，可自由查看、构建与分发。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- download -->
+  <section id="download">
+    <div class="wrap">
+      <div class="dl-card reveal">
+        <h2>现在，给 C 盘松个绑</h2>
+        <p>下载单文件便携版，双击即可运行（需管理员权限）。<br>开源免费，永远轻量。</p>
+        <div class="dl-actions">
+          <a class="btn btn-white" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo/releases/download/neo-1.0/C-Drive-Cleaner-neo-1.0-Win64.exe" data-primary-action>
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 3v10.6l3.3-3.3 1.4 1.4L11 17.4 5.3 11.7l1.4-1.4L10 13.6V3h2zM5 19h14v2H5z"/></svg>
+            下载 neo 1.0（Win64）
+          </a>
+          <a class="btn btn-line" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo" target="_blank" rel="noopener">查看源代码</a>
+        </div>
+        <div class="dl-meta">
+          <span><svg viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="M3 5h18v14H3V5zm2 2v10h14V7H5z"/></svg>Windows 64 位</span>
+          <span><svg viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7l8-4z"/></svg>需管理员权限</span>
+          <span><svg viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 5v5.4l4 2.4-.8 1.3L11 13V7h2z"/></svg>8.8 MB</span>
+          <span><svg viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="M12 2l2.2 5.9L20 10l-5.8 2.1L12 18l-2.2-5.9L4 10l5.8-2.1L12 2z"/></svg>MIT 开源</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>C Drive Cleaner neo · By ALing Studio · MIT License</span>
+    <span class="links">
+      <a href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo" target="_blank" rel="noopener">GitHub 仓库</a>
+      <a href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo/releases" target="_blank" rel="noopener">全部版本</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var nav = document.getElementById('nav');
+  function onScroll(){
+    if(window.scrollY > 10){ nav.classList.add('scrolled'); }
+    else{ nav.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal:not(.on)').forEach(function(el){ io.observe(el); });
+
+  var CIRC = 289, TARGET = 68;
+  var ring = document.getElementById('ring');
+  var ringNum = document.getElementById('ringNum');
+  var started = false;
+  function animateRing(){
+    if(started){ return; }
+    started = true;
+    ring.style.strokeDashoffset = String(CIRC * (1 - TARGET / 100));
+    var t0 = null;
+    function step(ts){
+      if(t0 === null){ t0 = ts; }
+      var p = Math.min((ts - t0) / 1600, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      ringNum.textContent = Math.round(TARGET * eased) + '%';
+      if(p < 1){ requestAnimationFrame(step); }
+    }
+    requestAnimationFrame(step);
+  }
+  var heroVisual = document.querySelector('.hero-visual');
+  var io2 = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ animateRing(); io2.disconnect(); }
+    });
+  }, {threshold:.3});
+  io2.observe(heroVisual);
+})();
+</script>
+</body>
+</html>
