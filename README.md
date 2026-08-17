@@ -1,3 +1,5 @@
+# 我们不需要臃肿的清理软件！
+
 # C Drive Cleaner neo
 
 Win11 风格 C 盘清理工具 —— 基于 [C Drive Cleaner](https://github.com/ALingStudio/C-Drive-Cleaner) v2.9 从底层全面重构的 neo 架构版本。
