@@ -176,6 +176,39 @@ a{color:inherit;text-decoration:none}
 .nav-links{display:flex;align-items:center;gap:30px;font-size:14px;color:var(--ink-2)}
 .nav-links a.link{transition:color .2s}
 .nav-links a.link:hover{color:var(--teal)}
+
+/* hamburger */
+.nav-toggle{
+  display:none;width:40px;height:40px;border:none;background:transparent;
+  cursor:pointer;align-items:center;justify-content:center;border-radius:10px;
+  transition:background .2s;
+}
+.nav-toggle:hover{background:var(--teal-soft)}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--ink);position:relative;transition:.3s}
+.nav-toggle span::before,.nav-toggle span::after{
+  content:"";position:absolute;left:0;width:20px;height:2px;background:var(--ink);transition:.3s;
+}
+.nav-toggle span::before{top:-6px}
+.nav-toggle span::after{top:6px}
+.nav-toggle.open span{background:transparent}
+.nav-toggle.open span::before{top:0;transform:rotate(45deg)}
+.nav-toggle.open span::after{top:0;transform:rotate(-45deg)}
+/* mobile nav overlay */
+.mobile-nav{
+  display:none;position:fixed;top:68px;left:0;right:0;
+  background:var(--card);border-bottom:1px solid var(--line);
+  padding:20px 28px;z-index:49;
+  transform:translateY(-100%);opacity:0;transition:transform .3s,opacity .3s;
+  box-shadow:0 8px 24px rgba(18,37,33,.08);
+}
+.mobile-nav.open{transform:translateY(0);opacity:1}
+.mobile-nav a{
+  display:block;padding:14px 0;font-size:16px;font-weight:600;color:var(--ink);
+  border-bottom:1px solid var(--line);
+}
+.mobile-nav a:last-child{border-bottom:none}
+.mobile-nav a:hover{color:var(--teal)}
+
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   border:none;cursor:pointer;font-family:inherit;
@@ -404,7 +437,8 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
   .tech-grid{grid-template-columns:1fr;gap:40px}
   .stats{flex-wrap:wrap;gap:18px 0}
   .stat{flex:1 1 40%}
-  .nav-links a.link{display:none}
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
   .dl-card{padding:56px 28px}
 }
 </style>
@@ -422,13 +456,19 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
       <a class="link" href="#features">功能</a>
       <a class="link" href="#trust">安全可靠</a>
       <a class="link" href="#tech">技术架构</a>
-      <a class="btn btn-primary" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo/releases/download/neo-1.0/C-Drive-Cleaner-neo-1.0-Win64.exe" data-primary-action aria-label="下载 C Drive Cleaner neo">
-        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.6l3.3-3.3 1.4 1.4L11 17.4 5.3 11.7l1.4-1.4L10 13.6V3h2zM5 19h14v2H5z"/></svg>
-        下载
-      </a>
+      <a class="link" href="#faq">常见问题</a>
     </nav>
+    <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" onclick="toggleMobileNav()">
+      <span></span>
+    </button>
   </div>
 </header>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#features" onclick="closeMobileNav()">功能</a>
+  <a href="#trust" onclick="closeMobileNav()">安全可靠</a>
+  <a href="#tech" onclick="closeMobileNav()">技术架构</a>
+  <a href="#faq" onclick="closeMobileNav()">常见问题</a>
+</div>
 <main id="top">
   <!-- hero -->
   <div class="hero">
@@ -660,6 +700,24 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
   </div>
 </footer>
 <script>
+function toggleMobileNav(){
+  var btn = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('mobileNav');
+  var isOpen = nav.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  btn.setAttribute('aria-label', isOpen ? '关闭菜单' : '打开菜单');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+function closeMobileNav(){
+  var btn = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('mobileNav');
+  nav.classList.remove('open');
+  btn.classList.remove('open');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-label', '打开菜单');
+  document.body.style.overflow = '';
+}
 (function(){
   var nav = document.getElementById('nav');
   function onScroll(){
