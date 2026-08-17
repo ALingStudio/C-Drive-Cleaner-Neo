@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alingstudio.github.io/C-Drive-Cleaner-Neo/sitemap.xml
