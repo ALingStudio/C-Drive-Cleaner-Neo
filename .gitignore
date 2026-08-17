@@ -1,0 +1,9 @@
+# build output
+build/bin/
+dist/
+
+# deps / tooling
+node_modules/
+
+# local
+*.log
