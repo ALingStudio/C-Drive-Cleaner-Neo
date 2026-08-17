@@ -353,6 +353,35 @@ h2{font-size:clamp(28px,3.4vw,40px);font-weight:800;letter-spacing:-.4px;line-he
 .btn-line:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
 .dl-meta{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-size:13px;opacity:.85}
 .dl-meta span{display:inline-flex;align-items:center;gap:7px}
+
+/* Q&A */
+#faq{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.faq-list{max-width:760px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:22px 4px;cursor:pointer;font-size:16px;font-weight:700;color:var(--ink);
+  transition:color .2s;user-select:none;
+}
+.faq-q:hover{color:var(--teal)}
+.faq-q .arrow{flex:none;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:var(--ink-3);transition:transform .3s}
+.faq-item.open .faq-q .arrow{transform:rotate(180deg);color:var(--teal)}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;
+  font-size:14px;line-height:1.85;color:var(--ink-2);
+}
+.faq-item.open .faq-a{max-height:300px;padding:0 4px 22px}
+/* download password tag */
+.dl-pwd{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:600;color:var(--ink-2);
+  background:var(--bg);border:1px solid var(--line);border-radius:999px;
+  padding:8px 16px;align-self:center;
+}
+.dl-pwd b{color:var(--teal);font-family:ui-monospace,Consolas,monospace;letter-spacing:.5px}
+.dl-card .dl-pwd{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff}
+.dl-card .dl-pwd b{color:#fff}
 /* footer */
 footer{padding:44px 0;border-top:1px solid var(--line)}
 .foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--ink-3)}
@@ -417,6 +446,11 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
             <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
             GitHub 仓库
           </a>
+          <a class="btn btn-ghost" href="https://wwasg.lanzouv.com/b00tcq1g0b" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v10.6l3.3-3.3 1.4 1.4L11 17.4 5.3 11.7l1.4-1.4L10 13.6V3h2zM5 19h14v2H5z"/></svg>
+            蓝奏云下载
+          </a>
+          <span class="dl-pwd">提取码 <b>Aling</b></span>
         </div>
         <div class="stats reveal on d4">
           <div class="stat"><b>8.8<i>MB</i></b><span>单文件便携版</span></div>
@@ -536,6 +570,61 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
       </div>
     </div>
   </section>
+  <!-- FAQ -->
+  <section id="faq" aria-labelledby="faq-heading">
+    <div class="wrap">
+      <div class="sec-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+        <span class="sec-tag">FAQ</span>
+        <h2 id="faq-heading">常见问题</h2>
+        <p class="sec-sub">关于 C Drive Cleaner neo，你可能想知道的</p>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span>C Drive Cleaner neo 是免费的吗？</span>
+            <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
+          </div>
+          <div class="faq-a">完全免费。采用 MIT 开源协议，源代码完整公开，可自由查看、构建与分发，没有任何功能限制或付费解锁。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span>需要安装吗？</span>
+            <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
+          </div>
+          <div class="faq-a">不需要安装。下载后为单文件便携版（仅 8.8 MB），双击即可运行。首次运行时系统会提示管理员权限，确认即可。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span>支持哪些 Windows 版本？</span>
+            <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
+          </div>
+          <div class="faq-a">支持 Windows 10 和 Windows 11 的 64 位系统。基于 Go + Wails v2 构建，调用系统原生 WebView2 渲染界面。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span>安全吗？会误删文件吗？</span>
+            <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
+          </div>
+          <div class="faq-a">清理命令逐字取自经过广泛验证的原版 v2.9 bat 脚本，并通过 SHA-256 校验完整性。危险操作独立分区并红色警示，建议首次使用时选择「一键快速清理」中的安全项。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span>为什么需要管理员权限？</span>
+            <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
+          </div>
+          <div class="faq-a">C 盘的系统垃圾文件（如 Windows 更新缓存、临时文件等）位于受保护的系统目录，需要管理员权限才能访问和清理。neo 完全离线运行，不会上传任何数据。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span>和旧版（Electron 版）有什么区别？</span>
+            <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
+          </div>
+          <div class="faq-a">neo 用 Go + Wails 完全重写，单文件仅 8.8 MB（旧版约 100+ MB），启动更快、内存占用更低，使用原生 WebView2 而非捆绑 Chromium。清理引擎行为与原版完全一致。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- download -->
   <section id="download" aria-labelledby="download-heading">
     <div class="wrap">
@@ -548,6 +637,8 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
             下载 neo 1.0（Win64）
           </a>
           <a class="btn btn-line" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo" target="_blank" rel="noopener">查看源代码</a>
+          <a class="btn btn-line" href="https://wwasg.lanzouv.com/b00tcq1g0b" target="_blank" rel="noopener">蓝奏云下载</a>
+          <span class="dl-pwd">提取码 <b>Aling</b></span>
         </div>
         <div class="dl-meta">
           <span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M3 5h18v14H3V5zm2 2v10h14V7H5z"/></svg>Windows 64 位</span>
