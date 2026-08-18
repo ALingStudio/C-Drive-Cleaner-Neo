@@ -518,7 +518,7 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
   <a href="#tech" onclick="closeMobileNav()" data-i18n="nav.tech">技术架构</a>
   <a href="#faq" onclick="closeMobileNav()" data-i18n="nav.faq">常见问题</a>
   <div class="mobile-lang">
-    <span class="mobile-lang-label" id="mobileLangLabel">语言 / Language</span>
+    <span class="mobile-lang-label" id="mobileLangLabel" data-i18n="lang.label">语言 / Language</span>
     <div class="mobile-lang-grid" id="mobileLangGrid"></div>
   </div>
 </div>
@@ -528,7 +528,7 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
     <div class="wrap hero-grid">
       <div>
         <div class="badge reveal on"><span class="dot"></span><span data-i18n="hero.badge">neo 1.0 现已发布 · MIT 开源</span></div>
-        <h1 class="reveal on d1">让 C 盘空间<br>回到<em data-i18n="hero.titleEm">最佳状态</em></h1>
+        <h1 class="reveal on d1" data-i18n="hero.title">让 C 盘空间<br>回到<em>最佳状态</em></h1>
         <p class="hero-sub reveal on d2" data-i18n="hero.sub">轻量、完全离线的开源 C 盘清理工具。单文件便携版仅 8.8 MB，原生高速引擎，内置 16 国语言——下载即用，无需安装。</p>
         <div class="hero-cta reveal on d3">
           <a class="btn btn-primary" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo/releases/download/neo-1.0/C-Drive-Cleaner-neo-1.0-Win64.exe" data-primary-action>
@@ -536,8 +536,7 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
             <span data-i18n="hero.btnDownload">免费下载 Windows 版</span>
           </a>
           <a class="btn btn-ghost" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
-            GitHub 仓库
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg><span data-i18n="hero.btnGithub">GitHub 仓库</span>
           </a>
           <a class="btn btn-ghost" href="https://wwasg.lanzouv.com/b00tcq1g0b" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v10.6l3.3-3.3 1.4 1.4L11 17.4 5.3 11.7l1.4-1.4L10 13.6V3h2zM5 19h14v2H5z"/></svg>
@@ -631,17 +630,17 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
         <div class="trust-item reveal">
           <div class="n">01</div>
           <h3 data-i18n="t1.title">命令逐字取自原版脚本</h3>
-          <p>运行时解析内置的原版 <code>C Drive Cleaner v2.9.bat</code>，清理命令零改动执行，并通过 SHA-256 校验完整性。</p>
+          <p data-i18n="t1.desc">运行时解析内置的原版 <code>C Drive Cleaner v2.9.bat</code>，清理命令零改动执行，并通过 SHA-256 校验完整性。</p>
         </div>
         <div class="trust-item reveal d1">
           <div class="n">02</div>
           <h3 data-i18n="t2.title">完全离线，轻量无捆绑</h3>
-          <p>使用 Windows 原生 WebView2 渲染，不捆绑 Chromium；单文件 8.8 MB，无需安装，不联网也能完整工作。</p>
+          <p data-i18n="t2.desc">使用 Windows 原生 WebView2 渲染，不捆绑 Chromium；单文件 8.8 MB，无需安装，不联网也能完整工作。</p>
         </div>
         <div class="trust-item reveal d2">
           <div class="n">03</div>
           <h3 data-i18n="t3.title">危险操作，醒目警示</h3>
-          <p>可能影响系统恢复的项目被放入独立危险操作区并红色标注；全局日志可选开启，清理过程有据可查。</p>
+          <p data-i18n="t3.desc">可能影响系统恢复的项目被放入独立危险操作区并红色标注；全局日志可选开启，清理过程有据可查。</p>
         </div>
       </div>
     </div>
@@ -655,11 +654,11 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
         <p class="sec-sub" data-i18n="tech.sub">Go 后端加原生前端渲染，把体积和性能都压到极限。开源在 GitHub，欢迎检视每一行代码。</p>
       </div>
       <div class="tech-list reveal d1">
-        <div class="tech-row"><span class="k">后端</span><span class="v"><b>Go 1.22 + Wails v2</b>，调用 Windows 系统原生 WebView2 渲染界面，不捆绑 Chromium，体积更小、启动更快。</span></div>
-        <div class="tech-row"><span class="k">清理引擎</span><span class="v">运行时解析内置原版 <b>v2.9 bat 脚本</b>，命令逐字执行、SHA-256 校验，行为与原版完全一致。</span></div>
-        <div class="tech-row"><span class="k">扫描引擎</span><span class="v">neo 原生高速引擎：<b>Go 并发遍历 + top-20 最小堆</b>，替代旧版 PowerShell 方案，带实时进度条。</span></div>
-        <div class="tech-row"><span class="k">多语言</span><span class="v"><b>16 种语言</b>，默认跟随系统语言，支持手动切换并持久化保存。</span></div>
-        <div class="tech-row"><span class="k">开源协议</span><span class="v"><b>MIT License</b>，源代码完整公开，可自由查看、构建与分发。</span></div>
+        <div class="tech-row"><span class="k" data-i18n="tech.k1">后端</span><span class="v" data-i18n="tech.v1"><b>Go 1.22 + Wails v2</b>，调用 Windows 系统原生 WebView2 渲染界面，不捆绑 Chromium，体积更小、启动更快。</span></div>
+        <div class="tech-row"><span class="k" data-i18n="tech.k2">清理引擎</span><span class="v" data-i18n="tech.v2">运行时解析内置原版 <b>v2.9 bat 脚本</b>，命令逐字执行、SHA-256 校验，行为与原版完全一致。</span></div>
+        <div class="tech-row"><span class="k" data-i18n="tech.k3">扫描引擎</span><span class="v" data-i18n="tech.v3">neo 原生高速引擎：<b>Go 并发遍历 + top-20 最小堆</b>，替代旧版 PowerShell 方案，带实时进度条。</span></div>
+        <div class="tech-row"><span class="k" data-i18n="tech.k4">多语言</span><span class="v" data-i18n="tech.v4"><b>16 种语言</b>，默认跟随系统语言，支持手动切换并持久化保存。</span></div>
+        <div class="tech-row"><span class="k" data-i18n="tech.k5">开源协议</span><span class="v" data-i18n="tech.v5"><b>MIT License</b>，源代码完整公开，可自由查看、构建与分发。</span></div>
       </div>
     </div>
   </section>
@@ -674,45 +673,45 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
       <div class="faq-list reveal">
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-            <span>C Drive Cleaner neo 是免费的吗？</span>
+            <span data-i18n="faq.q1">C Drive Cleaner neo 是免费的吗？</span>
             <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
           </div>
-          <div class="faq-a">完全免费。采用 MIT 开源协议，源代码完整公开，可自由查看、构建与分发，没有任何功能限制或付费解锁。</div>
+          <div class="faq-a" data-i18n="faq.a1">完全免费。采用 MIT 开源协议，源代码完整公开，可自由查看、构建与分发，没有任何功能限制或付费解锁。</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-            <span>需要安装吗？</span>
+            <span data-i18n="faq.q2">需要安装吗？</span>
             <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
           </div>
-          <div class="faq-a">不需要安装。下载后为单文件便携版（仅 8.8 MB），双击即可运行。首次运行时系统会提示管理员权限，确认即可。</div>
+          <div class="faq-a" data-i18n="faq.a2">不需要安装。下载后为单文件便携版（仅 8.8 MB），双击即可运行。首次运行时系统会提示管理员权限，确认即可。</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-            <span>支持哪些 Windows 版本？</span>
+            <span data-i18n="faq.q3">支持哪些 Windows 版本？</span>
             <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
           </div>
-          <div class="faq-a">支持 Windows 10 和 Windows 11 的 64 位系统。基于 Go + Wails v2 构建，调用系统原生 WebView2 渲染界面。</div>
+          <div class="faq-a" data-i18n="faq.a3">支持 Windows 10 和 Windows 11 的 64 位系统。基于 Go + Wails v2 构建，调用系统原生 WebView2 渲染界面。</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-            <span>安全吗？会误删文件吗？</span>
+            <span data-i18n="faq.q4">安全吗？会误删文件吗？</span>
             <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
           </div>
-          <div class="faq-a">清理命令逐字取自经过广泛验证的原版 v2.9 bat 脚本，并通过 SHA-256 校验完整性。危险操作独立分区并红色警示，建议首次使用时选择「一键快速清理」中的安全项。</div>
+          <div class="faq-a" data-i18n="faq.a4">清理命令逐字取自经过广泛验证的原版 v2.9 bat 脚本，并通过 SHA-256 校验完整性。危险操作独立分区并红色警示，建议首次使用时选择「一键快速清理」中的安全项。</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-            <span>为什么需要管理员权限？</span>
+            <span data-i18n="faq.q5">为什么需要管理员权限？</span>
             <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
           </div>
-          <div class="faq-a">C 盘的系统垃圾文件（如 Windows 更新缓存、临时文件等）位于受保护的系统目录，需要管理员权限才能访问和清理。neo 完全离线运行，不会上传任何数据。</div>
+          <div class="faq-a" data-i18n="faq.a5">C 盘的系统垃圾文件（如 Windows 更新缓存、临时文件等）位于受保护的系统目录，需要管理员权限才能访问和清理。neo 完全离线运行，不会上传任何数据。</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-            <span>和旧版（Electron 版）有什么区别？</span>
+            <span data-i18n="faq.q6">和旧版（Electron 版）有什么区别？</span>
             <span class="arrow"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
           </div>
-          <div class="faq-a">neo 用 Go + Wails 完全重写，单文件仅 8.8 MB（旧版约 100+ MB），启动更快、内存占用更低，使用原生 WebView2 而非捆绑 Chromium。清理引擎行为与原版完全一致。</div>
+          <div class="faq-a" data-i18n="faq.a6">neo 用 Go + Wails 完全重写，单文件仅 8.8 MB（旧版约 100+ MB），启动更快、内存占用更低，使用原生 WebView2 而非捆绑 Chromium。清理引擎行为与原版完全一致。</div>
         </div>
       </div>
     </div>
@@ -723,7 +722,7 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
     <div class="wrap">
       <div class="dl-card reveal">
         <h2 id="download-heading" data-i18n="dl.title">现在，给 C 盘松个绑</h2>
-        <p>下载单文件便携版，双击即可运行（需管理员权限）。<br>开源免费，永远轻量。</p>
+        <p data-i18n="dl.sub">下载单文件便携版，双击即可运行（需管理员权限）。<br>开源免费，永远轻量。</p>
         <div class="dl-actions">
           <a class="btn btn-white" href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo/releases/download/neo-1.0/C-Drive-Cleaner-neo-1.0-Win64.exe" data-primary-action>
             <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v10.6l3.3-3.3 1.4 1.4L11 17.4 5.3 11.7l1.4-1.4L10 13.6V3h2zM5 19h14v2H5z"/></svg>
@@ -734,10 +733,10 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
           <span class="dl-pwd"><span data-i18n="hero.pwd">提取码</span> <b>Aling</b></span>
         </div>
         <div class="dl-meta">
-          <span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M3 5h18v14H3V5zm2 2v10h14V7H5z"/></svg>Windows 64 位</span>
-          <span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7l8-4z"/></svg>需管理员权限</span>
-          <span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 5v5.4l4 2.4-.8 1.3L11 13V7h2z"/></svg>8.8 MB</span>
-          <span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 2l2.2 5.9L20 10l-5.8 2.1L12 18l-2.2-5.9L4 10l5.8-2.1L12 2z"/></svg>MIT 开源</span>
+          <span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M3 5h18v14H3V5zm2 2v10h14V7H5z"/></svg><span data-i18n="dl.meta1">Windows 64 位</span></span>
+          <span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7l8-4z"/></svg><span data-i18n="dl.meta2">需管理员权限</span></span>
+          <span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 5v5.4l4 2.4-.8 1.3L11 13V7h2z"/></svg><span data-i18n="dl.meta3">8.8 MB</span></span>
+          <span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 2l2.2 5.9L20 10l-5.8 2.1L12 18l-2.2-5.9L4 10l5.8-2.1L12 2z"/></svg><span data-i18n="dl.meta4">MIT 开源</span></span>
         </div>
       </div>
     </div>
@@ -747,7 +746,7 @@ footer{padding:44px 0;border-top:1px solid var(--line)}
   <div class="wrap foot">
     <span data-i18n="footer">C Drive Cleaner neo · By ALing Studio · MIT License</span>
     <span class="links">
-      <a href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo" target="_blank" rel="noopener"><span data-i18n="hero.btnGithub">GitHub 仓库</span></a>
+      <a href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo" target="_blank" rel="noopener"><span data-i18n="footer.repo">GitHub 仓库</span></a>
       <a href="https://github.com/ALingStudio/C-Drive-Cleaner-Neo/releases" target="_blank" rel="noopener"><span data-i18n="footer.rel">全部版本</span></a>
     </span>
   </div>
